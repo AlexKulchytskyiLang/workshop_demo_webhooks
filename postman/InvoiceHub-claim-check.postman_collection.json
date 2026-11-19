@@ -1,0 +1,256 @@
+{
+  "info": {
+    "name": "InvoiceHub: download a claim-check file",
+    "description": "What a receiving system does with a claim-check webhook, step by step: find the event, read the link out of its body, download the file, and compare size and SHA-256 with what the webhook announced.\n\nRun the requests in order (or run the collection). Needs the demo running on this machine.\n\n**Why a copied link fails**\n- The body is JSON, so the link contains `\\\"` (backslash and quote) when you copy it from a formatted view. The backslashes change a signed value: 403 AuthorizationFailure. Request 2 parses the JSON instead and turns the plain quotes into `%22`.\n- The link lives 15 minutes (the `se=` part). Request 0 makes a fresh event.\n- The link points at the Azurite emulator on this machine (127.0.0.1:<port>).\n\nRequests 3 to 5 have *URL encoding* switched off on purpose: the URL is sent exactly as the platform signed it.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "receiverUrl",
+      "value": "http://localhost:5201",
+      "description": "Contoso's receiving system (Fabrikam: 5202)"
+    },
+    {
+      "key": "simulatorUrl",
+      "value": "http://localhost:5400"
+    },
+    {
+      "key": "webhookId",
+      "value": ""
+    },
+    {
+      "key": "downloadUrl",
+      "value": ""
+    },
+    {
+      "key": "tamperedUrl",
+      "value": ""
+    },
+    {
+      "key": "unsignedUrl",
+      "value": ""
+    },
+    {
+      "key": "announcedSha256",
+      "value": ""
+    },
+    {
+      "key": "announcedSize",
+      "value": ""
+    },
+    {
+      "key": "expiresAt",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "0  Make a fresh claim-check event (then wait about 5 seconds)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"tenant\": \"contoso\", \"products\": 200 }"
+        },
+        "url": {
+          "raw": "{{simulatorUrl}}/simulator/imports",
+          "host": [
+            "{{simulatorUrl}}"
+          ],
+          "path": [
+            "simulator",
+            "imports"
+          ]
+        },
+        "description": "A catalogue import: the report (about 600 bytes of JSON) is written to blob storage and the webhook carries a link to it. For the 50 MB file use POST /simulator/exports with { \"tenant\": \"contoso\", \"sizeMegabytes\": 50 }."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('the job was accepted', () => pm.response.to.have.status(202));",
+              "console.log('Job ' + pm.response.json().jobId + ' is queued. Wait about 5 seconds, then run request 1.');"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "1  Find the newest claim-check event in the receiver's inbox",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{receiverUrl}}/api/inbox?limit=300",
+          "host": [
+            "{{receiverUrl}}"
+          ],
+          "path": [
+            "api",
+            "inbox"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "300"
+            }
+          ]
+        },
+        "description": "The inbox lists what the receiver has been sent, newest first."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('the inbox answered', () => pm.response.to.have.status(200));",
+              "const wanted = ['export.completed', 'catalog.products.imported'];",
+              "const hit = pm.response.json().find(r => wanted.includes(r.type));",
+              "pm.test('a claim-check event is there', () => pm.expect(hit, 'none yet: run request 0, wait a few seconds and send this again').to.exist);",
+              "if (hit) {",
+              "  pm.collectionVariables.set('webhookId', hit.webhookId);",
+              "  console.log('Using ' + hit.type + ' ' + hit.webhookId + ', received ' + hit.receivedAt);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2  Read the link out of the event body",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{receiverUrl}}/api/inbox/{{webhookId}}",
+          "host": [
+            "{{receiverUrl}}"
+          ],
+          "path": [
+            "api",
+            "inbox",
+            "{{webhookId}}"
+          ]
+        },
+        "description": "`body` is the webhook body exactly as received, a JSON document inside a JSON string. The script parses it, so no backslashes ever reach the link."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('the event was found', () => pm.response.to.have.status(200));",
+              "const data = JSON.parse(pm.response.json().body).data;",
+              "// the link holds two plain double quotes (inside the signed rscd value); send them as %22, which is what any HTTP client does",
+              "const url = data.download.url.split('\"').join('%22');",
+              "pm.collectionVariables.set('downloadUrl', url);",
+              "pm.collectionVariables.set('tamperedUrl', url.replace(/sig=(.)/, (m, c) => 'sig=' + (c === 'Z' ? 'Y' : 'Z')));",
+              "pm.collectionVariables.set('unsignedUrl', url.replace(/&sig=.*$/, ''));",
+              "pm.collectionVariables.set('announcedSha256', data.sha256);",
+              "pm.collectionVariables.set('announcedSize', String(data.size_bytes));",
+              "pm.collectionVariables.set('expiresAt', data.download.expires_at);",
+              "pm.test('the link has not expired yet (15 minutes after the attempt)', () => pm.expect(new Date(data.download.expires_at).getTime(), 'expired at ' + data.download.expires_at + ': run request 0 for a fresh one').to.be.above(Date.now()));",
+              "console.log('The webhook announces ' + data.size_bytes + ' bytes, sha256 ' + data.sha256 + ', link valid until ' + data.download.expires_at);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3  Download the file and verify it",
+      "protocolProfileBehavior": {
+        "disableUrlEncoding": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{downloadUrl}}",
+        "description": "The signed link, untouched. No credentials of any kind: the link is the permission."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "const bytes = pm.response.stream;   // the raw bytes of the file",
+              "",
+              "// SHA-256 of the bytes: the Web Crypto API where the Postman version has it, CryptoJS on older versions",
+              "async function sha256Hex(buf) {",
+              "  if (typeof crypto !== 'undefined' && crypto.subtle) {",
+              "    const digest = await crypto.subtle.digest('SHA-256', buf);",
+              "    return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');",
+              "  }",
+              "  return CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buf)).toString();",
+              "}",
+              "",
+              "pm.test('size is what the webhook announced', () => pm.expect(bytes.length).to.eql(Number(pm.collectionVariables.get('announcedSize'))));",
+              "pm.test('SHA-256 is what the webhook announced', async () => {",
+              "  const sha = await sha256Hex(bytes);",
+              "  console.log('downloaded ' + bytes.length + ' bytes, sha256 ' + sha);",
+              "  pm.expect(sha).to.eql(pm.collectionVariables.get('announcedSha256'));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4  Break it: one character of sig= changed (expect 403)",
+      "protocolProfileBehavior": {
+        "disableUrlEncoding": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{tamperedUrl}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refused with 403', () => pm.response.to.have.status(403));",
+              "pm.test('the storage service does not say which part was wrong', () => pm.expect(pm.response.text()).to.include('AuthorizationFailure'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5  Break it: no signature at all (expect 403)",
+      "protocolProfileBehavior": {
+        "disableUrlEncoding": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{unsignedUrl}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('refused with 403', () => pm.response.to.have.status(403));",
+              "pm.test('same error as above', () => pm.expect(pm.response.text()).to.include('AuthorizationFailure'));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

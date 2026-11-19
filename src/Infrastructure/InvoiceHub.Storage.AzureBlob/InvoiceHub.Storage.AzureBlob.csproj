@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Azure Blob Storage adapter for the claim-check port (ASR-18). Azurite in the demo, a storage account in production: same code. -->
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\InvoiceHub.BuildingBlocks\InvoiceHub.BuildingBlocks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="InvoiceHub.UnitTests" />
+    <InternalsVisibleTo Include="InvoiceHub.IntegrationTests" />
+  </ItemGroup>
+
+</Project>

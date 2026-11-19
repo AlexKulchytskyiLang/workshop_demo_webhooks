@@ -1,0 +1,63 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/AppHost/">
+    <Project Path="src/AppHost/InvoiceHub.AppHost/InvoiceHub.AppHost.csproj" />
+  </Folder>
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/InvoiceHub.BuildingBlocks/InvoiceHub.BuildingBlocks.csproj" />
+  </Folder>
+  <Folder Name="/src/Hosts/">
+    <Project Path="src/Hosts/InvoiceHub.Api/InvoiceHub.Api.csproj" />
+    <Project Path="src/Hosts/InvoiceHub.Delivery/InvoiceHub.Delivery.csproj" />
+    <Project Path="src/Hosts/InvoiceHub.Migrator/InvoiceHub.Migrator.csproj" />
+    <Project Path="src/Hosts/InvoiceHub.Simulator/InvoiceHub.Simulator.csproj" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="src/Infrastructure/InvoiceHub.Messaging.ServiceBus/InvoiceHub.Messaging.ServiceBus.csproj" />
+    <Project Path="src/Infrastructure/InvoiceHub.Storage.AzureBlob/InvoiceHub.Storage.AzureBlob.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Audit/">
+    <Project Path="src/Modules/Audit/InvoiceHub.Audit.Contracts/InvoiceHub.Audit.Contracts.csproj" />
+    <Project Path="src/Modules/Audit/InvoiceHub.Audit/InvoiceHub.Audit.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Billing/">
+    <Project Path="src/Modules/Billing/InvoiceHub.Billing.Contracts/InvoiceHub.Billing.Contracts.csproj" />
+    <Project Path="src/Modules/Billing/InvoiceHub.Billing/InvoiceHub.Billing.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Events/">
+    <Project Path="src/Modules/Events/InvoiceHub.Events.Contracts/InvoiceHub.Events.Contracts.csproj" />
+    <Project Path="src/Modules/Events/InvoiceHub.Events/InvoiceHub.Events.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Jobs/">
+    <Project Path="src/Modules/Jobs/InvoiceHub.Jobs.Contracts/InvoiceHub.Jobs.Contracts.csproj" />
+    <Project Path="src/Modules/Jobs/InvoiceHub.Jobs/InvoiceHub.Jobs.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Compliance/">
+    <Project Path="src/Modules/Compliance/InvoiceHub.Compliance.Contracts/InvoiceHub.Compliance.Contracts.csproj" />
+    <Project Path="src/Modules/Compliance/InvoiceHub.Compliance/InvoiceHub.Compliance.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Notifications/">
+    <Project Path="src/Modules/Notifications/InvoiceHub.Notifications/InvoiceHub.Notifications.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Tenancy/">
+    <Project Path="src/Modules/Tenancy/InvoiceHub.Tenancy.Contracts/InvoiceHub.Tenancy.Contracts.csproj" />
+    <Project Path="src/Modules/Tenancy/InvoiceHub.Tenancy/InvoiceHub.Tenancy.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Webhooks/">
+    <Project Path="src/Modules/Webhooks/InvoiceHub.Webhooks.Contracts/InvoiceHub.Webhooks.Contracts.csproj" />
+    <Project Path="src/Modules/Webhooks/InvoiceHub.Webhooks.Core/InvoiceHub.Webhooks.Core.csproj" />
+    <Project Path="src/Modules/Webhooks/InvoiceHub.Webhooks/InvoiceHub.Webhooks.csproj" />
+  </Folder>
+  <Folder Name="/src/Receiver/">
+    <Project Path="src/Receiver/InvoiceHub.Receiver.Api/InvoiceHub.Receiver.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/ServiceDefaults/">
+    <Project Path="src/ServiceDefaults/InvoiceHub.ServiceDefaults/InvoiceHub.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/InvoiceHub.ArchitectureTests/InvoiceHub.ArchitectureTests.csproj" />
+    <Project Path="tests/InvoiceHub.IntegrationTests/InvoiceHub.IntegrationTests.csproj" />
+    <Project Path="tests/InvoiceHub.UnitTests/InvoiceHub.UnitTests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Public surface of the Jobs module: asking for a bulk export or a vendor catalogue import. -->
+
+</Project>

@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="NetArchTest.eNhancedEdition" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\BuildingBlocks\InvoiceHub.BuildingBlocks\InvoiceHub.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Tenancy\InvoiceHub.Tenancy\InvoiceHub.Tenancy.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Tenancy\InvoiceHub.Tenancy.Contracts\InvoiceHub.Tenancy.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Events\InvoiceHub.Events\InvoiceHub.Events.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Events\InvoiceHub.Events.Contracts\InvoiceHub.Events.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Webhooks\InvoiceHub.Webhooks\InvoiceHub.Webhooks.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Webhooks\InvoiceHub.Webhooks.Core\InvoiceHub.Webhooks.Core.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Webhooks\InvoiceHub.Webhooks.Contracts\InvoiceHub.Webhooks.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Billing\InvoiceHub.Billing\InvoiceHub.Billing.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Billing\InvoiceHub.Billing.Contracts\InvoiceHub.Billing.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Audit\InvoiceHub.Audit\InvoiceHub.Audit.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Audit\InvoiceHub.Audit.Contracts\InvoiceHub.Audit.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Notifications\InvoiceHub.Notifications\InvoiceHub.Notifications.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Jobs\InvoiceHub.Jobs\InvoiceHub.Jobs.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Jobs\InvoiceHub.Jobs.Contracts\InvoiceHub.Jobs.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Compliance\InvoiceHub.Compliance\InvoiceHub.Compliance.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Compliance\InvoiceHub.Compliance.Contracts\InvoiceHub.Compliance.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\InvoiceHub.Storage.AzureBlob\InvoiceHub.Storage.AzureBlob.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\InvoiceHub.Messaging.ServiceBus\InvoiceHub.Messaging.ServiceBus.csproj" />
+    <ProjectReference Include="..\..\src\Hosts\InvoiceHub.Api\InvoiceHub.Api.csproj" />
+    <ProjectReference Include="..\..\src\Hosts\InvoiceHub.Delivery\InvoiceHub.Delivery.csproj" />
+    <ProjectReference Include="..\..\src\Hosts\InvoiceHub.Simulator\InvoiceHub.Simulator.csproj" />
+    <ProjectReference Include="..\..\src\Receiver\InvoiceHub.Receiver.Api\InvoiceHub.Receiver.Api.csproj" />
+    <ProjectReference Include="..\..\src\Hosts\InvoiceHub.Migrator\InvoiceHub.Migrator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

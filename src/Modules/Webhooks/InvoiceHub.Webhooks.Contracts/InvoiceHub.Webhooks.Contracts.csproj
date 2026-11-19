@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Public surface of the Webhooks module (status vocabulary other modules may rely on). -->
+
+</Project>

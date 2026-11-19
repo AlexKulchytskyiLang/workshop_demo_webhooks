@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="Aspire.Hosting.Testing" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AppHost\InvoiceHub.AppHost\InvoiceHub.AppHost.csproj" />
+    <ProjectReference Include="..\..\src\Hosts\InvoiceHub.Api\InvoiceHub.Api.csproj" />
+    <ProjectReference Include="..\..\src\BuildingBlocks\InvoiceHub.BuildingBlocks\InvoiceHub.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Webhooks\InvoiceHub.Webhooks.Core\InvoiceHub.Webhooks.Core.csproj" />
+  </ItemGroup>
+
+</Project>

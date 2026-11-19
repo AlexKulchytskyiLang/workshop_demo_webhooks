@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Public surface of the Tenancy module: what other modules and hosts may depend on. No EF, no ASP.NET, no implementation. -->
+
+</Project>

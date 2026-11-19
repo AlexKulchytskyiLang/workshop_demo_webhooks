@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- Demo-only host: drives the simulated Billing domain so that real business events flow through the real pipeline. Never part of the product. -->
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ServiceDefaults\InvoiceHub.ServiceDefaults\InvoiceHub.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\InvoiceHub.BuildingBlocks\InvoiceHub.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Modules\Tenancy\InvoiceHub.Tenancy\InvoiceHub.Tenancy.csproj" />
+    <ProjectReference Include="..\..\Modules\Events\InvoiceHub.Events\InvoiceHub.Events.csproj" />
+    <ProjectReference Include="..\..\Modules\Billing\InvoiceHub.Billing\InvoiceHub.Billing.csproj" />
+    <ProjectReference Include="..\..\Modules\Jobs\InvoiceHub.Jobs\InvoiceHub.Jobs.csproj" />
+    <ProjectReference Include="..\..\Modules\Compliance\InvoiceHub.Compliance\InvoiceHub.Compliance.csproj" />
+  </ItemGroup>
+
+</Project>

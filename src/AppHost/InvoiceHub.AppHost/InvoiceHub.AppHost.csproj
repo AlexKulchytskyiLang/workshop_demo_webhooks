@@ -1,0 +1,25 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.6.5">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <UserSecretsId>5d0c3f58-6b3e-4a9e-9a7c-0b1a2c3d4e5f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" />
+    <PackageReference Include="Aspire.Hosting.SqlServer" />
+    <PackageReference Include="Aspire.Hosting.Azure.ServiceBus" />
+    <PackageReference Include="Aspire.Hosting.Azure.Storage" />
+    <PackageReference Include="Aspire.Hosting.Keycloak" />
+    <PackageReference Include="Aspire.Hosting.JavaScript" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Hosts\InvoiceHub.Api\InvoiceHub.Api.csproj" />
+    <ProjectReference Include="..\..\Hosts\InvoiceHub.Migrator\InvoiceHub.Migrator.csproj" />
+    <ProjectReference Include="..\..\Hosts\InvoiceHub.Delivery\InvoiceHub.Delivery.csproj" />
+    <ProjectReference Include="..\..\Hosts\InvoiceHub.Simulator\InvoiceHub.Simulator.csproj" />
+    <ProjectReference Include="..\..\Receiver\InvoiceHub.Receiver.Api\InvoiceHub.Receiver.Api.csproj" />
+  </ItemGroup>
+
+</Project>

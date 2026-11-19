@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Pure delivery logic: no database, no HTTP stack, no framework. Everything here is unit-testable with a fake clock. -->
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="InvoiceHub.UnitTests" />
+  </ItemGroup>
+
+</Project>

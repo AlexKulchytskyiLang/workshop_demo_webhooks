@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InvoiceHub.Tenancy.Contracts\InvoiceHub.Tenancy.Contracts.csproj" />
+    <ProjectReference Include="..\..\Audit\InvoiceHub.Audit.Contracts\InvoiceHub.Audit.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\InvoiceHub.BuildingBlocks\InvoiceHub.BuildingBlocks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\*.sql" />
+    <!-- One source of truth for demo tenants and users: shared with the Keycloak realm generator. -->
+    <EmbeddedResource Include="..\..\..\..\infra\seed\seed.json" LogicalName="InvoiceHub.Tenancy.Seed.seed.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="InvoiceHub.UnitTests" />
+    <InternalsVisibleTo Include="InvoiceHub.IntegrationTests" />
+  </ItemGroup>
+
+</Project>

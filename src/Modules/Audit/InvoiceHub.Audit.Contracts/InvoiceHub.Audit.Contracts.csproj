@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Public surface of the Audit module: how any module records "who did what". -->
+
+</Project>

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InvoiceHub.Webhooks.Core\InvoiceHub.Webhooks.Core.csproj" />
+    <ProjectReference Include="..\InvoiceHub.Webhooks.Contracts\InvoiceHub.Webhooks.Contracts.csproj" />
+    <ProjectReference Include="..\..\Events\InvoiceHub.Events.Contracts\InvoiceHub.Events.Contracts.csproj" />
+    <ProjectReference Include="..\..\Audit\InvoiceHub.Audit.Contracts\InvoiceHub.Audit.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\InvoiceHub.BuildingBlocks\InvoiceHub.BuildingBlocks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\*.sql" />
+    <EmbeddedResource Include="..\..\..\..\infra\seed\webhook-seed.json" LogicalName="InvoiceHub.Webhooks.Seed.webhook-seed.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="InvoiceHub.UnitTests" />
+    <InternalsVisibleTo Include="InvoiceHub.IntegrationTests" />
+  </ItemGroup>
+
+</Project>

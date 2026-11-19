@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Public surface of the Events module. Plain types only (System.Data.Common is part of the BCL). -->
+
+</Project>

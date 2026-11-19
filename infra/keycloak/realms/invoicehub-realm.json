@@ -1,0 +1,430 @@
+{
+  "realm": "invoicehub",
+  "displayName": "InvoiceHub",
+  "loginTheme": "invoicehub",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "bruteForceProtected": true,
+  "failureFactor": 10,
+  "passwordPolicy": "length(12) and notUsername",
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "roles": {
+    "realm": [
+      {
+        "name": "owner",
+        "description": "Tenant role: owner"
+      },
+      {
+        "name": "admin",
+        "description": "Tenant role: admin"
+      },
+      {
+        "name": "developer",
+        "description": "Tenant role: developer"
+      },
+      {
+        "name": "support",
+        "description": "Tenant role: support"
+      },
+      {
+        "name": "viewer",
+        "description": "Tenant role: viewer"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "portal",
+      "name": "InvoiceHub tenant portal",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "implicitFlowEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://localhost:5173/*"
+      ],
+      "webOrigins": [
+        "http://localhost:5173"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:5173/*"
+      },
+      "protocolMappers": [
+        {
+          "name": "tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "tenant_slug",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_slug",
+            "claim.name": "tenant_slug",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "roles",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "api-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "invoicehub-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "tenancy-admin",
+      "name": "Tenancy admin (service account)",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "invoicehub-dev-admin-secret",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false
+    }
+  ],
+  "users": [
+    {
+      "id": "0198a000-0000-7000-8000-000000000101",
+      "username": "owner@contoso.test",
+      "email": "owner@contoso.test",
+      "firstName": "Olena",
+      "lastName": "Kovalenko",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000001"
+        ],
+        "tenant_slug": [
+          "contoso"
+        ]
+      },
+      "realmRoles": [
+        "owner"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000102",
+      "username": "admin@contoso.test",
+      "email": "admin@contoso.test",
+      "firstName": "Taras",
+      "lastName": "Hryhorenko",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000001"
+        ],
+        "tenant_slug": [
+          "contoso"
+        ]
+      },
+      "realmRoles": [
+        "admin"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000103",
+      "username": "developer@contoso.test",
+      "email": "developer@contoso.test",
+      "firstName": "Dmytro",
+      "lastName": "Bondar",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000001"
+        ],
+        "tenant_slug": [
+          "contoso"
+        ]
+      },
+      "realmRoles": [
+        "developer"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000104",
+      "username": "support@contoso.test",
+      "email": "support@contoso.test",
+      "firstName": "Sofiia",
+      "lastName": "Melnyk",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000001"
+        ],
+        "tenant_slug": [
+          "contoso"
+        ]
+      },
+      "realmRoles": [
+        "support"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000105",
+      "username": "viewer@contoso.test",
+      "email": "viewer@contoso.test",
+      "firstName": "Viktor",
+      "lastName": "Shevchenko",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000001"
+        ],
+        "tenant_slug": [
+          "contoso"
+        ]
+      },
+      "realmRoles": [
+        "viewer"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000106",
+      "username": "owner@fabrikam.test",
+      "email": "owner@fabrikam.test",
+      "firstName": "Petro",
+      "lastName": "Lysenko",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000002"
+        ],
+        "tenant_slug": [
+          "fabrikam"
+        ]
+      },
+      "realmRoles": [
+        "owner"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000107",
+      "username": "admin@fabrikam.test",
+      "email": "admin@fabrikam.test",
+      "firstName": "Maryna",
+      "lastName": "Savchenko",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000002"
+        ],
+        "tenant_slug": [
+          "fabrikam"
+        ]
+      },
+      "realmRoles": [
+        "admin"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000108",
+      "username": "developer@fabrikam.test",
+      "email": "developer@fabrikam.test",
+      "firstName": "Iryna",
+      "lastName": "Tkachenko",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000002"
+        ],
+        "tenant_slug": [
+          "fabrikam"
+        ]
+      },
+      "realmRoles": [
+        "developer"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000109",
+      "username": "support@fabrikam.test",
+      "email": "support@fabrikam.test",
+      "firstName": "Andrii",
+      "lastName": "Moroz",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000002"
+        ],
+        "tenant_slug": [
+          "fabrikam"
+        ]
+      },
+      "realmRoles": [
+        "support"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000110",
+      "username": "viewer@fabrikam.test",
+      "email": "viewer@fabrikam.test",
+      "firstName": "Oksana",
+      "lastName": "Bilyk",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "tenant_id": [
+          "0198a000-0000-7000-8000-000000000002"
+        ],
+        "tenant_slug": [
+          "fabrikam"
+        ]
+      },
+      "realmRoles": [
+        "viewer"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Passw0rd!2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "username": "service-account-tenancy-admin",
+      "enabled": true,
+      "serviceAccountClientId": "tenancy-admin",
+      "clientRoles": {
+        "realm-management": [
+          "manage-users",
+          "view-users",
+          "query-users",
+          "view-realm"
+        ]
+      }
+    }
+  ],
+  "components": {
+    "org.keycloak.userprofile.UserProfileProvider": [
+      {
+        "providerId": "declarative-user-profile",
+        "subComponents": {},
+        "config": {
+          "kc.user.profile.config": [
+            "{\"attributes\": [{\"name\": \"username\", \"displayName\": \"${username}\", \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}, \"multivalued\": false, \"validations\": {\"length\": {\"min\": 3, \"max\": 255}, \"username-prohibited-characters\": {}, \"up-username-not-idn-homograph\": {}}}, {\"name\": \"email\", \"displayName\": \"${email}\", \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}, \"multivalued\": false, \"required\": {\"roles\": [\"user\"]}, \"validations\": {\"email\": {}, \"length\": {\"max\": 255}}}, {\"name\": \"firstName\", \"displayName\": \"${firstName}\", \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}, \"multivalued\": false, \"required\": {\"roles\": [\"user\"]}, \"validations\": {\"length\": {\"max\": 255}, \"person-name-prohibited-characters\": {}}}, {\"name\": \"lastName\", \"displayName\": \"${lastName}\", \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}, \"multivalued\": false, \"required\": {\"roles\": [\"user\"]}, \"validations\": {\"length\": {\"max\": 255}, \"person-name-prohibited-characters\": {}}}, {\"name\": \"tenant_id\", \"displayName\": \"Tenant\", \"validations\": {}, \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\"]}, \"multivalued\": false}, {\"name\": \"tenant_slug\", \"displayName\": \"Tenant address\", \"validations\": {}, \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\"]}, \"multivalued\": false}], \"groups\": []}"
+          ]
+        }
+      }
+    ]
+  }
+}

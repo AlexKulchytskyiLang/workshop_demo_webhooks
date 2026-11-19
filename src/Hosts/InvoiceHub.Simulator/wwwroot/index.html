@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InvoiceHub simulator console</title>
+<style>
+  :root { --bg:#0d1117; --surface:#161b22; --surface2:#21262d; --border:#30363d; --text:#e6edf3; --muted:#9da7b3; --blue:#58a6ff; --btn:#1f6feb; --green:#3fb950; --red:#ff8b84; --amber:#e3b341; }
+  @media (prefers-color-scheme: light) { :root { --bg:#f6f8fa; --surface:#fff; --surface2:#eaeef2; --border:#d0d7de; --text:#1f2328; --muted:#59636e; --blue:#0550ae; --btn:#0969da; --green:#116329; --red:#a40e26; --amber:#7d4e00; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 "Segoe UI", system-ui, sans-serif; }
+  header { padding: 16px 24px; border-bottom: 1px solid var(--border); background: var(--surface); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  header h1 { font-size: 18px; margin: 0; }
+  header .tag { font-size: 12px; border: 1px solid var(--amber); color: var(--amber); border-radius: 6px; padding: 1px 8px; }
+  nav { margin-left: auto; display: flex; gap: 14px; flex-wrap: wrap; }
+  a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+  main { max-width: 1200px; margin: 0 auto; padding: 20px 24px 60px; display: grid; gap: 16px; }
+  .bar { display: flex; gap: 12px; align-items: end; flex-wrap: wrap; }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  h2 { font-size: 15px; margin: 0 0 4px; }
+  p { margin: 0 0 12px; color: var(--muted); }
+  label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+  input, select { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; font: inherit; min-width: 90px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; }
+  button { background: var(--btn); color: #fff; border: 0; border-radius: 6px; padding: 7px 14px; font: inherit; font-weight: 600; cursor: pointer; }
+  button.quiet { background: var(--surface2); color: var(--text); border: 1px solid var(--border); font-weight: 400; }
+  button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  #status { min-height: 1.4em; font-weight: 600; }
+  #status.err { color: var(--red); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  th { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+</style>
+</head>
+<body>
+<header>
+  <h1>InvoiceHub simulator</h1><span class="tag">demo tooling: plays the platform's customers</span>
+  <nav aria-label="Other demo tools">
+    <a href="http://localhost:5173" target="_blank" rel="noreferrer">Tenant portal</a>
+    <a href="http://localhost:5174" target="_blank" rel="noreferrer">Contoso receiver</a>
+    <a href="http://localhost:5175" target="_blank" rel="noreferrer">Fabrikam receiver</a>
+    <a href="http://localhost:8025" target="_blank" rel="noreferrer">Mailpit (alert email)</a>
+    <a href="http://localhost:8085" target="_blank" rel="noreferrer">Keycloak</a>
+  </nav>
+</header>
+<main>
+  <div class="bar">
+    <div><label for="tenant">Business activity for</label><select id="tenant"></select></div>
+    <button type="button" class="quiet" id="stop">Stop all traffic</button>
+    <div id="status" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="grid">
+    <section aria-labelledby="h-traffic">
+      <h2 id="h-traffic">Invoice traffic</h2>
+      <p>Invoices are generated, paid, go overdue; payments fail. Each step is a real command that commits the change and its event together.</p>
+      <div class="row">
+        <div><label for="count">Invoices</label><input id="count" type="number" min="1" max="5000" value="30"></div>
+        <div><label for="rate">Per second</label><input id="rate" type="number" min="0.1" max="100" step="0.1" value="5"></div>
+        <div><label for="pay">Paid share</label><input id="pay" type="number" min="0" max="1" step="0.05" value="0.7"></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button type="button" id="traffic">Start traffic</button>
+        <button type="button" class="quiet" id="burst">Burst: 300 invoices at 40 per second</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-export">
+      <h2 id="h-export">Bulk export (claim-check)</h2>
+      <p>A large file is written to blob storage; the event carries a small envelope with a size, a checksum and an expiring link.</p>
+      <div class="row">
+        <div><label for="mb">Size in MB</label><input id="mb" type="number" min="1" max="200" value="50"></div>
+        <button type="button" id="export">Request export</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-import">
+      <h2 id="h-import">Vendor catalogue import</h2>
+      <p>An EDI 832 style file is imported; the import report (what was added, updated, rejected) is the claim-checked result.</p>
+      <div class="row">
+        <div><label for="products">Products</label><input id="products" type="number" min="1" max="100000" value="2500"></div>
+        <button type="button" id="import">Import catalogue</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-kyc">
+      <h2 id="h-kyc">Identity verifications (KYC)</h2>
+      <p>The event carries ids only. The receiver pulls the details with an API key, and every read is audited.</p>
+      <div class="row">
+        <div><label for="kyc-count">Verifications</label><input id="kyc-count" type="number" min="1" max="200" value="3"></div>
+        <button type="button" id="kyc">Complete verifications</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-renew">
+      <h2 id="h-renew">Subscription renewals</h2>
+      <p>Recurring revenue events: <code>subscription.renewed</code>.</p>
+      <div class="row">
+        <div><label for="renew-count">Renewals</label><input id="renew-count" type="number" min="1" max="500" value="5"></div>
+        <button type="button" id="renew">Renew subscriptions</button>
+      </div>
+    </section>
+  </div>
+
+  <section aria-labelledby="h-runs">
+    <h2 id="h-runs">Traffic runs</h2>
+    <table>
+      <thead><tr><th scope="col">Started</th><th scope="col">Tenant</th><th scope="col">State</th><th scope="col">Invoices</th><th scope="col">Paid</th><th scope="col">Overdue</th><th scope="col">Failed payments</th><th scope="col">Errors</th></tr></thead>
+      <tbody id="runs"></tbody>
+    </table>
+  </section>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const status = (text, bad) => { const s = $('status'); s.textContent = text; s.className = bad ? 'err' : ''; };
+  const tenant = () => $('tenant').value;
+  async function post(path, body) {
+    try {
+      const r = await fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
+      if (!r.ok) { const p = await r.json().catch(() => ({})); status(p.title || `Failed (${r.status})`, true); return null; }
+      return r.status === 204 ? {} : await r.json();
+    } catch { status('The simulator could not be reached.', true); return null; }
+  }
+  async function load() {
+    const tenants = await (await fetch('/simulator/tenants')).json();
+    $('tenant').innerHTML = tenants.map(t => `<option value="${t.slug}">${t.name}</option>`).join('');
+  }
+  $('traffic').onclick = async () => { const r = await post('/simulator/invoices', { tenant: tenant(), count: +$('count').value, perSecond: +$('rate').value, payRatio: +$('pay').value, overdueRatio: Math.max(0, Math.min(0.2, 1 - +$('pay').value - 0.1)), failedPaymentRatio: 0.1 }); if (r) status(`Started ${r.request.count} invoices for ${tenant()}`); };
+  $('burst').onclick = async () => { const r = await post('/simulator/invoices', { tenant: tenant(), count: 300, perSecond: 40, payRatio: 0.8, overdueRatio: 0.05, failedPaymentRatio: 0.1 }); if (r) status('Burst started: 300 invoices at 40 per second'); };
+  $('stop').onclick = async () => { await post('/simulator/stop-all'); status('All traffic stopped'); };
+  $('export').onclick = async () => { const r = await post('/simulator/exports', { tenant: tenant(), sizeMegabytes: +$('mb').value }); if (r) status(`Export ${r.jobId} requested (${$('mb').value} MB). The job runner will write it and announce it.`); };
+  $('import').onclick = async () => { const r = await post('/simulator/imports', { tenant: tenant(), products: +$('products').value }); if (r) status(`Import ${r.jobId} requested`); };
+  $('kyc').onclick = async () => { const r = await post('/simulator/kyc', { tenant: tenant(), count: +$('kyc-count').value }); if (r) status(`${r.length} verifications completed`); };
+  $('renew').onclick = async () => { const r = await post('/simulator/renewals', { tenant: tenant(), count: +$('renew-count').value }); if (r) status(`${r.renewed} subscriptions renewed`); };
+  async function runs() {
+    try {
+      const list = await (await fetch('/simulator/scenarios')).json();
+      $('runs').innerHTML = list.slice(0, 8).map(s => `<tr><td>${new Date(s.startedAt).toLocaleTimeString()}</td><td>${s.tenant}</td><td>${s.state}</td><td>${s.created}</td><td>${s.paid}</td><td>${s.overdue}</td><td>${s.paymentsFailed}</td><td>${s.errors}</td></tr>`).join('') || '<tr><td colspan="8">No runs yet.</td></tr>';
+    } catch { /* the next poll will try again */ }
+  }
+  load().then(runs); setInterval(runs, 2000);
+</script>
+</body>
+</html>

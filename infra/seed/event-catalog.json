@@ -1,0 +1,453 @@
+{
+  "categories": [
+    {
+      "name": "Invoices",
+      "pii": false,
+      "events": [
+        {
+          "type": "invoice.generated",
+          "description": "A new invoice was issued to a customer",
+          "payload": "fat",
+          "referenceKeys": [
+            "invoice_id"
+          ]
+        },
+        {
+          "type": "invoice.sent",
+          "description": "Invoice delivered to the customer by email or portal",
+          "payload": "fat",
+          "referenceKeys": [
+            "invoice_id"
+          ]
+        },
+        {
+          "type": "invoice.viewed",
+          "description": "Customer opened the invoice",
+          "payload": "fat",
+          "referenceKeys": [
+            "invoice_id"
+          ]
+        },
+        {
+          "type": "invoice.paid",
+          "description": "Invoice fully paid",
+          "payload": "fat",
+          "referenceKeys": [
+            "invoice_id"
+          ]
+        },
+        {
+          "type": "invoice.overdue",
+          "description": "Due date passed without full payment",
+          "payload": "fat",
+          "referenceKeys": [
+            "invoice_id"
+          ]
+        },
+        {
+          "type": "invoice.voided",
+          "description": "Invoice cancelled before payment",
+          "payload": "fat",
+          "referenceKeys": [
+            "invoice_id"
+          ]
+        },
+        {
+          "type": "invoice.disputed",
+          "description": "Customer opened a dispute",
+          "payload": "fat",
+          "referenceKeys": [
+            "invoice_id"
+          ]
+        },
+        {
+          "type": "invoice.reminder.sent",
+          "description": "A payment reminder went out",
+          "payload": "fat",
+          "referenceKeys": [
+            "invoice_id"
+          ]
+        },
+        {
+          "type": "credit_note.issued",
+          "description": "Credit note created against an invoice",
+          "payload": "fat",
+          "referenceKeys": [
+            "invoice_id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "pii": false,
+      "events": [
+        {
+          "type": "payment.completed",
+          "description": "Payment captured and settled",
+          "payload": "fat",
+          "referenceKeys": [
+            "payment_id"
+          ]
+        },
+        {
+          "type": "payment.failed",
+          "description": "Payment attempt failed (decline, insufficient funds…)",
+          "payload": "fat",
+          "referenceKeys": [
+            "payment_id"
+          ]
+        },
+        {
+          "type": "payment.refunded",
+          "description": "Refund issued",
+          "payload": "fat",
+          "referenceKeys": [
+            "payment_id"
+          ]
+        },
+        {
+          "type": "payment.dispute.opened",
+          "description": "Card dispute or chargeback opened",
+          "payload": "fat",
+          "referenceKeys": [
+            "payment_id"
+          ]
+        },
+        {
+          "type": "payout.paid",
+          "description": "Payout reached the bank account",
+          "payload": "fat",
+          "referenceKeys": [
+            "payment_id"
+          ]
+        },
+        {
+          "type": "payout.failed",
+          "description": "Payout was rejected by the bank",
+          "payload": "fat",
+          "referenceKeys": [
+            "payment_id"
+          ]
+        },
+        {
+          "type": "bulk_payment.batch.completed",
+          "description": "A payout batch finished. Results are in the report link",
+          "payload": "claim",
+          "referenceKeys": [
+            "payment_id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "pii": false,
+      "events": [
+        {
+          "type": "subscription.created",
+          "description": "New subscription started",
+          "payload": "fat",
+          "referenceKeys": [
+            "subscription_id"
+          ]
+        },
+        {
+          "type": "subscription.renewed",
+          "description": "Billing period renewed and paid",
+          "payload": "fat",
+          "referenceKeys": [
+            "subscription_id"
+          ]
+        },
+        {
+          "type": "subscription.renewal_failed",
+          "description": "Renewal payment failed",
+          "payload": "fat",
+          "referenceKeys": [
+            "subscription_id"
+          ]
+        },
+        {
+          "type": "subscription.trial_ending",
+          "description": "Trial ends in 3 days",
+          "payload": "fat",
+          "referenceKeys": [
+            "subscription_id"
+          ]
+        },
+        {
+          "type": "subscription.plan_changed",
+          "description": "Plan upgraded or downgraded",
+          "payload": "fat",
+          "referenceKeys": [
+            "subscription_id"
+          ]
+        },
+        {
+          "type": "subscription.canceled",
+          "description": "Subscription cancelled",
+          "payload": "fat",
+          "referenceKeys": [
+            "subscription_id"
+          ]
+        },
+        {
+          "type": "subscription.past_due",
+          "description": "Renewal unpaid past the grace period",
+          "payload": "fat",
+          "referenceKeys": [
+            "subscription_id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Vendors & EDI",
+      "pii": false,
+      "events": [
+        {
+          "type": "vendor.created",
+          "description": "A vendor was added",
+          "payload": "fat",
+          "referenceKeys": [
+            "vendor_id"
+          ]
+        },
+        {
+          "type": "vendor.updated",
+          "description": "Vendor details changed",
+          "payload": "fat",
+          "referenceKeys": [
+            "vendor_id"
+          ]
+        },
+        {
+          "type": "edi.document.received",
+          "description": "Inbound EDI interchange received (850, 810, 856…)",
+          "payload": "fat",
+          "referenceKeys": [
+            "document_id"
+          ]
+        },
+        {
+          "type": "edi.document.accepted",
+          "description": "Acknowledged as accepted (997 / 999)",
+          "payload": "fat",
+          "referenceKeys": [
+            "document_id"
+          ]
+        },
+        {
+          "type": "edi.document.rejected",
+          "description": "Acknowledged with errors. See the rejection report",
+          "payload": "fat",
+          "referenceKeys": [
+            "document_id"
+          ]
+        },
+        {
+          "type": "catalog.products.imported",
+          "description": "New products from a vendor file were imported. Import report is a link",
+          "payload": "claim",
+          "referenceKeys": [
+            "import_id",
+            "vendor_id"
+          ]
+        },
+        {
+          "type": "purchase_order.received",
+          "description": "Purchase order received from a customer",
+          "payload": "fat",
+          "referenceKeys": [
+            "document_id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Compliance (KYC / AML)",
+      "pii": true,
+      "events": [
+        {
+          "type": "kyc.completed",
+          "description": "Identity verification finished. Ids and status only, details via API",
+          "payload": "thin",
+          "referenceKeys": [
+            "verification_id"
+          ]
+        },
+        {
+          "type": "kyc.review_required",
+          "description": "A verification needs a manual decision",
+          "payload": "thin",
+          "referenceKeys": [
+            "verification_id"
+          ]
+        },
+        {
+          "type": "sanctions.screening.hit",
+          "description": "A sanctions or PEP screening returned a match",
+          "payload": "thin",
+          "referenceKeys": [
+            "verification_id"
+          ]
+        },
+        {
+          "type": "document.verification.completed",
+          "description": "Document check finished",
+          "payload": "thin",
+          "referenceKeys": [
+            "verification_id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jobs & exports",
+      "pii": false,
+      "events": [
+        {
+          "type": "export.completed",
+          "description": "A bulk export finished. Download link is expiring",
+          "payload": "claim",
+          "referenceKeys": [
+            "export_id"
+          ]
+        },
+        {
+          "type": "export.failed",
+          "description": "A bulk export failed",
+          "payload": "fat",
+          "referenceKeys": [
+            "export_id"
+          ]
+        },
+        {
+          "type": "import.completed",
+          "description": "A bulk import finished",
+          "payload": "claim",
+          "referenceKeys": [
+            "import_id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Platform alerts",
+      "pii": false,
+      "events": [
+        {
+          "type": "webhook.endpoint.degraded",
+          "description": "One of your endpoints is failing",
+          "payload": "fat",
+          "referenceKeys": [
+            "resource_id"
+          ]
+        },
+        {
+          "type": "webhook.endpoint.auto_disabled",
+          "description": "An endpoint was disabled automatically",
+          "payload": "fat",
+          "referenceKeys": [
+            "resource_id"
+          ]
+        },
+        {
+          "type": "webhook.secret.expiring",
+          "description": "A signing secret or key expires soon",
+          "payload": "fat",
+          "referenceKeys": [
+            "resource_id"
+          ]
+        },
+        {
+          "type": "api.version.deprecating",
+          "description": "A payload version you use is being retired",
+          "payload": "fat",
+          "referenceKeys": [
+            "resource_id"
+          ]
+        },
+        {
+          "type": "api_key.expiring",
+          "description": "An API key expires soon",
+          "payload": "fat",
+          "referenceKeys": [
+            "resource_id"
+          ]
+        }
+      ]
+    }
+  ],
+  "bundles": {
+    "finance": [
+      "invoice.generated",
+      "invoice.paid",
+      "invoice.overdue",
+      "payment.completed",
+      "payment.failed"
+    ],
+    "subs": [
+      "subscription.created",
+      "subscription.renewed",
+      "subscription.renewal_failed",
+      "subscription.canceled"
+    ],
+    "edi": [
+      "edi.document.received",
+      "edi.document.rejected",
+      "catalog.products.imported"
+    ],
+    "alerts": [
+      "webhook.endpoint.degraded",
+      "webhook.endpoint.auto_disabled",
+      "webhook.secret.expiring"
+    ]
+  },
+  "templates": {
+    "custom": {},
+    "erp": {
+      "name": "ERP – Production",
+      "desc": "Posts invoices and payments to the ERP",
+      "events": [
+        "invoice.generated",
+        "invoice.paid",
+        "invoice.overdue",
+        "payment.completed",
+        "payment.failed",
+        "edi.document.received",
+        "edi.document.rejected",
+        "webhook.endpoint.auto_disabled"
+      ]
+    },
+    "flow": {
+      "name": "Power Automate flow",
+      "desc": "Starts a flow when an invoice is generated or paid",
+      "events": [
+        "invoice.generated",
+        "invoice.paid",
+        "payment.failed"
+      ]
+    },
+    "chat": {
+      "name": "Finance alerts relay",
+      "desc": "Forwards overdue and failed payments to the finance channel",
+      "events": [
+        "payment.failed",
+        "invoice.overdue",
+        "webhook.endpoint.auto_disabled"
+      ]
+    },
+    "dwh": {
+      "name": "Data warehouse sync",
+      "desc": "Nightly analytics load",
+      "events": [
+        "invoice.paid",
+        "payment.completed",
+        "subscription.renewed",
+        "export.completed"
+      ]
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "demoPassword": "Passw0rd!2026",
+  "tenants": [
+    {
+      "id": "0198a000-0000-7000-8000-000000000001",
+      "slug": "contoso",
+      "name": "Contoso Ltd"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000002",
+      "slug": "fabrikam",
+      "name": "Fabrikam Inc"
+    }
+  ],
+  "users": [
+    {
+      "id": "0198a000-0000-7000-8000-000000000101",
+      "email": "owner@contoso.test",
+      "firstName": "Olena",
+      "lastName": "Kovalenko",
+      "tenant": "contoso",
+      "role": "owner"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000102",
+      "email": "admin@contoso.test",
+      "firstName": "Taras",
+      "lastName": "Hryhorenko",
+      "tenant": "contoso",
+      "role": "admin"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000103",
+      "email": "developer@contoso.test",
+      "firstName": "Dmytro",
+      "lastName": "Bondar",
+      "tenant": "contoso",
+      "role": "developer"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000104",
+      "email": "support@contoso.test",
+      "firstName": "Sofiia",
+      "lastName": "Melnyk",
+      "tenant": "contoso",
+      "role": "support"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000105",
+      "email": "viewer@contoso.test",
+      "firstName": "Viktor",
+      "lastName": "Shevchenko",
+      "tenant": "contoso",
+      "role": "viewer"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000106",
+      "email": "owner@fabrikam.test",
+      "firstName": "Petro",
+      "lastName": "Lysenko",
+      "tenant": "fabrikam",
+      "role": "owner"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000107",
+      "email": "admin@fabrikam.test",
+      "firstName": "Maryna",
+      "lastName": "Savchenko",
+      "tenant": "fabrikam",
+      "role": "admin"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000108",
+      "email": "developer@fabrikam.test",
+      "firstName": "Iryna",
+      "lastName": "Tkachenko",
+      "tenant": "fabrikam",
+      "role": "developer"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000109",
+      "email": "support@fabrikam.test",
+      "firstName": "Andrii",
+      "lastName": "Moroz",
+      "tenant": "fabrikam",
+      "role": "support"
+    },
+    {
+      "id": "0198a000-0000-7000-8000-000000000110",
+      "email": "viewer@fabrikam.test",
+      "firstName": "Oksana",
+      "lastName": "Bilyk",
+      "tenant": "fabrikam",
+      "role": "viewer"
+    }
+  ],
+  "apiKeys": [
+    {
+      "tenant": "contoso",
+      "name": "Demo receiver (Contoso ERP)",
+      "scopes": [
+        "events:read",
+        "kyc:read"
+      ],
+      "key": "ihk_0198a000000070008000000000000001_0198a0000000700080000000000002a1_demoContosoReceiverKey2026-notASecret-xxxxxxxx"
+    },
+    {
+      "tenant": "fabrikam",
+      "name": "Demo receiver (Fabrikam ERP)",
+      "scopes": [
+        "events:read",
+        "kyc:read"
+      ],
+      "key": "ihk_0198a000000070008000000000000002_0198a0000000700080000000000002b1_demoFabrikamReceiverKey2026-notASecret-xxxxxxx"
+    }
+  ]
+}

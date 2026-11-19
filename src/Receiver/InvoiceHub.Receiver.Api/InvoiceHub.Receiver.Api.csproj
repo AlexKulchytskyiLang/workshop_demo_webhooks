@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!--
+    The tenant's side of the integration: a stand-in for Contoso's ERP. It is deliberately NOT part of the platform: its own database, its own
+    code, and the only thing it shares with the platform is the public contract (headers, signature format). It uses the platform's
+    signing helper the way a customer would use the open-source Standard Webhooks library.
+  -->
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ServiceDefaults\InvoiceHub.ServiceDefaults\InvoiceHub.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\..\Modules\Webhooks\InvoiceHub.Webhooks.Core\InvoiceHub.Webhooks.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="InvoiceHub.IntegrationTests" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,21 @@
+/* InvoiceHub brand on top of keycloak.v2 */
+:root {
+  --keycloak-logo-url: url('../img/logo.svg');
+  --keycloak-logo-height: 44px;
+  --keycloak-logo-width: 280px;
+  --keycloak-card-top-color: #2f81f7;
+}
+
+/* organisation banner (filled in by tenant-banner.js) */
+.ih-tenant-banner {
+  margin: 16px 32px 0;
+  padding: 10px 14px;
+  border: 1px solid #2f81f7;
+  border-radius: 8px;
+  background: rgba(47, 129, 247, .12);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.ih-tenant-banner b { font-weight: 600; }
+.ih-tenant-banner .ih-sub { display: block; margin-top: 2px; font-size: 13px; } /* no opacity: it would blend the link colour below the AA contrast ratio */
+.ih-tenant-banner a { text-decoration: underline; text-underline-offset: 2px; }

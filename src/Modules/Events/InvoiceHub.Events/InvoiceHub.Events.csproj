@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InvoiceHub.Events.Contracts\InvoiceHub.Events.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\InvoiceHub.BuildingBlocks\InvoiceHub.BuildingBlocks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\*.sql" />
+    <!-- The 42-event catalogue is shared with the portal prototype and the deck: one file. -->
+    <EmbeddedResource Include="..\..\..\..\infra\seed\event-catalog.json" LogicalName="InvoiceHub.Events.Catalog.event-catalog.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="InvoiceHub.UnitTests" />
+    <InternalsVisibleTo Include="InvoiceHub.IntegrationTests" />
+  </ItemGroup>
+
+</Project>

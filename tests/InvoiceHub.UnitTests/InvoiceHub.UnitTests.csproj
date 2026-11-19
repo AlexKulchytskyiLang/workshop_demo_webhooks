@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="StandardWebhooks" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="..\..\src\BuildingBlocks\InvoiceHub.BuildingBlocks\InvoiceHub.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Tenancy\InvoiceHub.Tenancy\InvoiceHub.Tenancy.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Tenancy\InvoiceHub.Tenancy.Contracts\InvoiceHub.Tenancy.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Webhooks\InvoiceHub.Webhooks.Core\InvoiceHub.Webhooks.Core.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Events\InvoiceHub.Events.Contracts\InvoiceHub.Events.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Webhooks\InvoiceHub.Webhooks\InvoiceHub.Webhooks.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Notifications\InvoiceHub.Notifications\InvoiceHub.Notifications.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Audit\InvoiceHub.Audit.Contracts\InvoiceHub.Audit.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Jobs\InvoiceHub.Jobs\InvoiceHub.Jobs.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

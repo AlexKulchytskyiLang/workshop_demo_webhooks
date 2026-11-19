@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- Worker host: outbox relay, fan-out, delivery attempts and the sweeper. Scales out (several replicas run side by side). -->
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ServiceDefaults\InvoiceHub.ServiceDefaults\InvoiceHub.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\InvoiceHub.BuildingBlocks\InvoiceHub.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\InvoiceHub.Messaging.ServiceBus\InvoiceHub.Messaging.ServiceBus.csproj" />
+    <ProjectReference Include="..\..\Modules\Events\InvoiceHub.Events\InvoiceHub.Events.csproj" />
+    <ProjectReference Include="..\..\Modules\Audit\InvoiceHub.Audit\InvoiceHub.Audit.csproj" />
+    <ProjectReference Include="..\..\Modules\Notifications\InvoiceHub.Notifications\InvoiceHub.Notifications.csproj" />
+    <ProjectReference Include="..\..\Modules\Jobs\InvoiceHub.Jobs\InvoiceHub.Jobs.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\InvoiceHub.Storage.AzureBlob\InvoiceHub.Storage.AzureBlob.csproj" />
+    <ProjectReference Include="..\..\Modules\Tenancy\InvoiceHub.Tenancy\InvoiceHub.Tenancy.csproj" />
+    <ProjectReference Include="..\..\Modules\Webhooks\InvoiceHub.Webhooks\InvoiceHub.Webhooks.csproj" />
+  </ItemGroup>
+
+</Project>

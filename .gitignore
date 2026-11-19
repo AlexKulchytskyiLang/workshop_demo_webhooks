@@ -17,6 +17,20 @@
 # Mono auto generated files
 mono_crash.*
 
+bin/
+obj/
+*.user
+*.suo
+.vs/
+node_modules/
+dist/
+.vite/
+playwright-report/
+test-results/
+*.log
+spikes/spike0/results/*.log
+
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

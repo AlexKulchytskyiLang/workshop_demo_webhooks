@@ -1,0 +1,45 @@
+{
+  "endpoints": [
+    {
+      "id": "0198a000-0000-7000-8000-0000000001e1",
+      "tenantId": "0198a000-0000-7000-8000-000000000001",
+      "name": "Contoso ERP",
+      "url": "{receiver}/hooks/contoso-erp",
+      "description": "Demo receiver: the Contoso ERP simulator that ships with the platform.",
+      "payloadStyle": "fat",
+      "retryPreset": "demo",
+      "events": [
+        "invoice.generated",
+        "invoice.paid",
+        "invoice.overdue",
+        "payment.completed",
+        "payment.failed",
+        "subscription.renewed",
+        "export.completed",
+        "catalog.products.imported",
+        "kyc.completed"
+      ],
+      "secret": "whsec_AqUfFzouCVdRJvYxal/3v+ozQ3V97EioucsCk+oTwL0="
+    },
+    {
+      "id": "0198a000-0000-7000-8000-0000000001e2",
+      "tenantId": "0198a000-0000-7000-8000-000000000002",
+      "name": "Fabrikam ERP",
+      "url": "{receiver:fabrikam}/hooks/fabrikam-erp",
+      "description": "Demo receiver: the Fabrikam ERP simulator (a second, independent receiving application).",
+      "payloadStyle": "fat",
+      "retryPreset": "demo",
+      "events": [
+        "invoice.generated",
+        "invoice.paid",
+        "invoice.overdue",
+        "payment.completed",
+        "payment.failed",
+        "subscription.renewed",
+        "export.completed",
+        "kyc.completed"
+      ],
+      "secret": "whsec_RmFicmlrYW0tZGVtby1zZWNyZXQtbm90LWEtcmVhbC1vbmU="
+    }
+  ]
+}
