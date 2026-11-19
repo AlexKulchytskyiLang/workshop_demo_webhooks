@@ -13,7 +13,10 @@ Where to read next: **[docs/TECH-DESIGN.md](docs/TECH-DESIGN.md)** (what the dem
 Prerequisites: .NET SDK 10.0.103, Docker (about 8 GB for Docker Desktop: two SQL Server containers, Keycloak and the Service Bus emulator), Node 22, Chrome (for the browser tests), the ASP.NET dev certificate trusted (`dotnet dev-certs https --trust`).
 
 ```powershell
-cd demo\web ; npm install ; cd ..          # once
+cd demo\web ; 
+npm install ; 
+cd ..          
+# once
 dotnet run --project src\AppHost\InvoiceHub.AppHost --launch-profile http
 ```
 
